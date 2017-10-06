@@ -1,0 +1,25 @@
+title: Blog articles
+description: Blog articles to read
+link: https://dhole.github.io/
+items:
+- title: Emulating a GameBoy Cartridge with an STM32F4. Part 1 · Dhole's blog
+  link: https://dhole.github.io/post/gameboy_cartridge_emu_1/
+  description: None
+  date: 06 Oct 17 02:54 -0700
+  date_unix: 1507283646
+
+- title: Emulating a GameBoy Cartridge with an STM32F4. Part 2 · Dhole's blog
+  link: https://dhole.github.io/post/gameboy_cartridge_emu_2/
+  description: None
+  date: 06 Oct 17 02:54 -0700
+  date_unix: 1507283657
+- title: Booting the GameBoy with a custom logo · Dhole's blog
+  link: https://dhole.github.io/post/gameboy_custom_logo/
+  description: None
+  date: 06 Oct 17 02:54 -0700
+  date_unix: 1507283666
+- title: 'Raspberry Pi: setting up alpine, lighttpd and letsencrypt · Dhole''s blog'
+  link: https://dhole.github.io/post/raspberry_pi_alpine_lighttpd/
+  description: None
+  date: 06 Oct 17 02:54 -0700
+  date_unix: 1507283690

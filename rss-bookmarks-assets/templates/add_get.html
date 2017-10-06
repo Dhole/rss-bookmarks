@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>channel {{ .name }}</title>
+    <link href="{{ .prefix }}/static/style.css" rel="stylesheet" media="all">
+  </head>
+<html>
+<body>
+
+<div class="center">
+  <h1>Add a bookmark for channel <em>{{ .name }}</em>.</h1>
+
+  <p>
+      <form action="{{ .name }}" method="post">
+        <b>URL:</b>
+        <input type="text" name="url">
+        <input type="submit" value="Submit">
+      </form>
+  </p>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>channel {{ .name }}</title>
+    <link href="{{ .prefix }}/static/style.css" rel="stylesheet" media="all">
+  </head>
+<html>
+<body>
+
+<div class="center">
+  <h1 style="color:#ff6347">Error adding bookmark for channel <em>{{ .name }}</em>.</h1>
+</div>
+  <p>
+    <b>URL:</b> {{ .url }}</br>
+    <b>Error:</b> {{ .err }}</br>
+  </p>
+
+</body>
+</html>
+
+
