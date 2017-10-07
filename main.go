@@ -42,7 +42,7 @@ type RssChannel struct {
 var reTitle *regexp.Regexp
 var httpCli *http.Client
 
-func NewRssItem(url string) (*RssItem, error) {
+func NewRssItem(url string, desc string) (*RssItem, error) {
 	resp, err := httpCli.Get(url)
 	if err != nil {
 		return nil, err
@@ -62,12 +62,11 @@ func NewRssItem(url string) (*RssItem, error) {
 	}
 	title := html.UnescapeString(_title[1])
 
-	description := "None"
 	date := time.Now()
 	return &RssItem{
 		Title:       title,
 		Link:        url,
-		Description: description,
+		Description: desc,
 		Date:        date.Format(time.RFC822Z),
 		DateUnix:    date.Unix(),
 	}, nil
@@ -179,11 +178,11 @@ func (channel *RssChannel) AddItem(item *RssItem) error {
 	return nil
 }
 
-func (channel *RssChannel) AddItemByUrl(url string) (*RssItem, error) {
+func (channel *RssChannel) AddItemByUrl(url string, desc string) (*RssItem, error) {
 	if channel.linkSet[url] {
 		return nil, fmt.Errorf("URL already exists in the channel")
 	}
-	item, err := NewRssItem(url)
+	item, err := NewRssItem(url, desc)
 	if err != nil {
 		return nil, err
 	}
@@ -261,13 +260,14 @@ func main() {
 	router.POST(fmt.Sprintf("%s/%s", prefix, "add/:name"), func(c *gin.Context) {
 		name := c.Param("name")
 		url := c.PostForm("url")
+		comment := c.PostForm("comment")
 		channel, ok := rssChannels[name]
 		if !ok {
 			c.String(http.StatusBadRequest, fmt.Sprintf("Channel %s not found", name))
 			return
 		}
 		channel.rwm.Lock()
-		item, err := channel.AddItemByUrl(url)
+		item, err := channel.AddItemByUrl(url, comment)
 		channel.rwm.Unlock()
 		if err != nil {
 			c.HTML(http.StatusOK, "add_post_err.html", gin.H{

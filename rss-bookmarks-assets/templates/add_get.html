@@ -8,17 +8,17 @@
 <html>
 <body>
 
-<div class="center">
-  <h1>Add a bookmark for channel <em>{{ .name }}</em>.</h1>
-
-  <p>
-      <form action="{{ .name }}" method="post">
-        <b>URL:</b>
-        <input type="text" name="url">
-        <input type="submit" value="Submit">
-      </form>
-  </p>
-</div>
+  <div class="center">
+    <h1>Add a bookmark for channel <em>{{ .name }}</em>.</h1>
+  </div>
+  <form action="{{ .name }}" method="post">
+    <p><label>URL:</label> <input type="text" name="url"></p>
+    <br>
+    <p><label>Comment:</label> <textarea name="comment" cols="80" rows="6"></textarea></p>
+    <div class="center">
+      <p><input type="submit" value="Submit"></p>
+    </div>
+  </form>
 
 </body>
 </html>

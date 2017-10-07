@@ -4,11 +4,11 @@ body {
     line-height: 1.4;
     font-size: 18px;
     color: #333;
-    padding: 0 10px
+    padding: 0 10px;
 }
 
 h1,h2,h3 {
-    line-height: 1.2
+    line-height: 1.2;
 }
 
 .center {
@@ -16,5 +16,27 @@ h1,h2,h3 {
 }
 
 input[type=text] {
-    width: 70%
+    font-family: inherit;
+    font-size: 18px;
+    width: 600px;
+    max-width: 100%;
+}
+
+textarea {
+    font-family: inherit;
+    font-size: 18px;
+    width: 600px;
+    max-width: 100%;
+}
+
+form p label {
+    display:block;
+    float:left;
+    width:120px;
+}
+
+label {
+    text-align: right;
+    padding: 0 10px;
+    font-weight: bold;
 }
