@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"encoding/xml"
 	"flag"
 	"fmt"
 	"github.com/gin-gonic/gin"
@@ -11,6 +12,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"net/url"
 	"os"
 	"path"
 	"regexp"
@@ -18,6 +20,23 @@ import (
 	"sync"
 	"time"
 )
+
+func xmlEscape(s string) (string, error) {
+	var b bytes.Buffer
+	err := xml.EscapeText(&b, []byte(s))
+	if err != nil {
+		return "", err
+	}
+	return b.String(), nil
+}
+
+func urlEscape(s string) (string, error) {
+	u, err := url.Parse(s)
+	if err != nil {
+		return "", err
+	}
+	return u.String(), nil
+}
 
 type RssItem struct {
 	Title       string `yaml:"title"`
@@ -73,14 +92,16 @@ func NewRssItem(url string, desc string) (*RssItem, error) {
 }
 
 func (item *RssItem) SerializeXML() string {
-
+	title, _ := xmlEscape(item.Title)
+	description, _ := xmlEscape(item.Description)
+	link, _ := urlEscape(item.Link)
 	return fmt.Sprintf(` <item>
   <title>%s</title>
   <description>%s</description>
   <link>%s</link>
   <pubDate>%s</pubDate>
  </item>
-`, item.Title, item.Description, item.Link, item.Date)
+`, title, description, link, item.Date)
 }
 
 func LoadRssChannel(cfgFile string) (*RssChannel, error) {
@@ -106,6 +127,9 @@ func LoadRssChannel(cfgFile string) (*RssChannel, error) {
 func (channel *RssChannel) SerializeXML() string {
 	var xml bytes.Buffer
 	date := time.Now().Format(time.RFC822Z)
+	title, _ := xmlEscape(channel.Title)
+	description, _ := xmlEscape(channel.Description)
+	link, _ := urlEscape(channel.Link)
 	fmt.Fprintf(&xml, `<?xml version="1.0" encoding="UTF-8" ?>
 <rss version="2.0">
 <channel>
@@ -115,7 +139,7 @@ func (channel *RssChannel) SerializeXML() string {
  <lastBuildDate>%s</lastBuildDate>
  <pubDate>%s</pubDate>
 
-`, channel.Title, channel.Description, channel.Link, date, date)
+`, title, description, link, date, date)
 
 	for i := len(channel.Items) - 1; i >= 0; i-- {
 		item := channel.Items[i]
